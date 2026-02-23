@@ -9,7 +9,7 @@ const StudentForm = () => {
   // 2. ฟังก์ชันดึงข้อมูลทั้งหมด (แยกออกมาเพื่อให้เรียกซ้ำได้ตอน Add เสร็จ)
   const fetchStudents = async () => {
     try {
-      const response = await fetch(`${import.meta.env.BACKEND_API_URL}/student/list`);
+      const response = await fetch(`${import.meta.env.BACKEND_API_URL}student/list`);
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
       setStudents(result);
@@ -32,7 +32,7 @@ const StudentForm = () => {
     console.log("Payload to send:", student);
 
     try {
-      await fetch(`${import.meta.env.BACKEND_API_URL}/student/add`, {
+      await fetch(`${import.meta.env.BACKEND_API_URL}student/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(student)
