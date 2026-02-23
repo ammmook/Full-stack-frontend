@@ -9,7 +9,7 @@ const StudentForm = () => {
   // 2. ฟังก์ชันดึงข้อมูลทั้งหมด (แยกออกมาเพื่อให้เรียกซ้ำได้ตอน Add เสร็จ)
   const fetchStudents = async () => {
     try {
-      const response = await fetch("http://localhost:8080/student/list");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/student/list`);
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
       setStudents(result);
@@ -32,7 +32,7 @@ const StudentForm = () => {
     console.log("Payload to send:", student);
 
     try {
-      await fetch("http://localhost:8080/student/add", {
+      await fetch(`${import.meta.env.VITE_API_URL}/student/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(student)
@@ -55,13 +55,11 @@ const StudentForm = () => {
   return (
     <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       
-      {/* ---------------- Section 1: Form (Add Student) ---------------- */}
       <div className="bg-white shadow-sm border border-gray-200 rounded-lg p-6 md:p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6 tracking-tight border-b pb-2">
           Add Student
         </h1>
         
-        {/* ใช้ onSubmit แทน onClick ที่ปุ่ม เพื่อรองรับการกด Enter */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="studentName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -102,7 +100,6 @@ const StudentForm = () => {
         </form>
       </div>
 
-      {/* ---------------- Section 2: Display List (Students) ---------------- */}
       <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
         Students
       </h1>
@@ -115,7 +112,6 @@ const StudentForm = () => {
         ) : (
           <div className="space-y-4">
             {students.map((student) => (
-              // แสดงผลคล้ายๆ Paper ของ Material-UI แต่นำมาเขียนด้วย Tailwind
               <div 
                 key={student.id} 
                 className="bg-white p-4 rounded-md shadow-md border border-gray-100 text-left"
